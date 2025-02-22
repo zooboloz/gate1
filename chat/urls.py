@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import chat_room  # chat_room 뷰 연결
+from .views import chat_room, home
 
 urlpatterns = [
-    path("", chat_room, name="chat_room"),  # `/chat/`에서 채팅 화면 보이도록 설정
+    path("", home, name="home"),  # 홈 화면
+    path("chat/", chat_room, name="chat_room"),  # 채팅방
 ]

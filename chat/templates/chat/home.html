@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gate1 Chat</title>
+    <style>
+        body {
+            background-color: black;
+            color: red;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: red;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gate1 Chat</h1>
+    <input type="text" id="username" placeholder="사용자 이름을 입력하세요">
+    <button onclick="enterChat()">입장</button>
+
+    <script>
+        function enterChat() {
+            let username = document.getElementById("username").value.trim();
+            if (username) {
+                window.location.href = "/chat/?username=" + encodeURIComponent(username);
+            }
+        }
+    </script>
+</body>
+</html>

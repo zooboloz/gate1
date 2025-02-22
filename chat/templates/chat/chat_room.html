@@ -3,44 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gate1 채팅</title>
+    <title>Gate1 Chat Room</title>
     <style>
-        body { background-color: black; color: white; text-align: center; font-family: Arial, sans-serif; }
-        #chat-box { width: 80%; height: 400px; overflow-y: auto; border: 1px solid red; margin: 20px auto; padding: 10px; }
-        #message-input { width: 70%; padding: 10px; }
-        #send-btn { padding: 10px; background-color: red; color: white; border: none; cursor: pointer; }
+        body {
+            background-color: black;
+            color: yellow;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        #chat-box {
+            width: 80%;
+            height: 400px;
+            overflow-y: auto;
+            border: 2px solid red;
+            padding: 10px;
+            background-color: #222;
+            color: white;
+        }
+        #message-input {
+            padding: 10px;
+            font-size: 16px;
+            width: 70%;
+        }
+        button {
+            background-color: red;
+            color: black;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <h2>Gate1 채팅방</h2>
+    <h1>Gate1 Chat</h1>
+    <p>사용자: <span id="username">{{ username }}</span></p>
     <div id="chat-box"></div>
     <input type="text" id="message-input" placeholder="메시지를 입력하세요">
-    <button id="send-btn">전송</button>
+    <button onclick="sendMessage()">전송</button>
 
     <script>
-        const username = new URLSearchParams(window.location.search).get("username");
-        const chatBox = document.getElementById("chat-box");
-        const messageInput = document.getElementById("message-input");
-        const sendBtn = document.getElementById("send-btn");
+        let username = "{{ username }}";
+        let chatBox = document.getElementById("chat-box");
 
-        // Render에서는 wss:// 사용
-        const socket = new WebSocket(`wss://${window.location.host}/ws/chat/`);
-
-        socket.onmessage = function(event) {
-            const data = JSON.parse(event.data);
-            const messageElement = document.createElement("p");
-            messageElement.innerHTML = `<strong>${data.username}</strong>: ${data.message}`;
-            chatBox.appendChild(messageElement);
-            chatBox.scrollTop = chatBox.scrollHeight;
-        };
-
-        sendBtn.onclick = function() {
-            const message = messageInput.value.trim();
+        function sendMessage() {
+            let messageInput = document.getElementById("message-input");
+            let message = messageInput.value.trim();
             if (message) {
-                socket.send(JSON.stringify({"username": username, "message": message}));
+                let msgElement = document.createElement("p");
+                msgElement.textContent = username + ": " + message;
+                chatBox.appendChild(msgElement);
                 messageInput.value = "";
+                chatBox.scrollTop = chatBox.scrollHeight;
             }
-        };
+        }
     </script>
 </body>
 </html>
