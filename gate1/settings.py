@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'chat',
     'channels',
+    "daphne",
 ]
 
 MIDDLEWARE = [
@@ -134,9 +135,11 @@ ASGI_APPLICATION = 'gate1.asgi.application'
 
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [("your-redis-url", 6379)],
+            
         },
     },
 }
+
