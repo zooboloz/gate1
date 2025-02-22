@@ -53,3 +53,5 @@ DATABASES = {
         'PORT': os.environ.get('PGPORT', '5432'),
     }
 }
+
+WSGI_APPLICATION = "gate1.wsgi.application"
